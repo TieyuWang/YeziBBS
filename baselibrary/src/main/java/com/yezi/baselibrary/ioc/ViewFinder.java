@@ -1,4 +1,4 @@
-package com.yezi.baselibrary;
+package com.yezi.baselibrary.ioc;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 /**
- * @author : GW00175635
+ * @author : yezi
  * @date : 2020/2/28 17:12
  * desc   :
  * version: 1.0

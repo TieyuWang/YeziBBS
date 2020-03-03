@@ -2,32 +2,57 @@ package com.yezi.yezibbs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-
-import android.content.Context;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.os.UserManager;
-import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.yezi.baselibrary.ViewID;
-import com.yezi.baselibrary.ViewUtils;
+import com.yezi.baselibrary.exception.ExceptionCrashHandler;
+import com.yezi.baselibrary.ioc.ViewById;
+import com.yezi.baselibrary.ioc.ViewOnClick;
+import com.yezi.baselibrary.ioc.ViewUtils;
+import com.yezi.framelibrary.BaseSkinActivity;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
-    @ViewID(R.id.hello_text);
+
+/**
+ * @author yez
+ */
+public class MainActivity extends BaseSkinActivity {
+    @ViewById(R.id.hello_text)
     private TextView mTextView;
     private static final String TAG = "MainActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setContentView() {
         setContentView(R.layout.activity_main);
         ViewUtils.inject(this);
     }
 
+    @Override
+    protected void initData() {
+      //  checkCrashAndUpload();
+        mTextView.setText("test");
+    }
 
+    private void checkCrashAndUpload() {
+        HashMap<String,String> map = ExceptionCrashHandler.getInstance().getCrashLogFile();
+        if(map == null) {
+            return;
+        }
+        for(String key:map.keySet()){
+            System.out.println("Key: "+key+" Value: "+map.get(key));
+        }
+    }
+
+    @Override
+    protected void initActionBar() {
+        int a = 2/0;
+    }
+
+    @ViewOnClick(R.id.hello_text)
+    private void onClick(View view){
+        Toast.makeText(this,"onClick",Toast.LENGTH_LONG).show();
+    }
 }
